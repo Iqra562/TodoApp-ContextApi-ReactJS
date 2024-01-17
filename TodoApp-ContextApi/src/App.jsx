@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { TodoProvider } from './context/TodosContext';
 import TodoForm from './components/TodoForm';
+import TodoItem from './components/TodoItem';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -48,8 +49,14 @@ function App() {
                     </div>
                     <div className="flex flex-wrap gap-y-3">
                     
-                            {/* <TodoItem  /> */}
-                      
+          {
+            todos.map((todoItem)=>(
+<div  key={todoItem.id}   className='w-full'>
+  <TodoItem todo={todoItem}/>
+  {/* <h1>{todoItem.todo}</h1> */}
+</div>
+            ))
+          }                      
                     </div>
                 </div>
             </div>
