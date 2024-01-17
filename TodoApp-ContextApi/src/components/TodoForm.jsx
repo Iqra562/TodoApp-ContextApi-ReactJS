@@ -7,8 +7,10 @@ function TodoForm(){
  event.preventDefault();
  if(!todo) return 
  addTodo({todo,completed:false});
+//  addTodo({id:Date.now(),todo,completed:false});
+ 
  setTodo("");
-   
+    
  }
     return(
         <form onSubmit={add}  className="flex">

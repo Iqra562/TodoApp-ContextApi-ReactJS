@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import viteLogo from '/vite.svg' 
 import './App.css'
 import { TodoProvider } from './context/TodosContext';
 import TodoForm from './components/TodoForm';
@@ -10,10 +10,11 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo)=>{
-    setTodos((prev)=>[{id:Date.now,...todo},...prev])
+    setTodos((prev)=>[{id:Date.now(),...todo},...prev])
+    // setTodos((prev) => [{id: Date.now(), ...todo}, ...prev] )
 
   }
-
+ 
   const updateTodo  = (id,todo)=>{
     setTodos((prev)=>prev.map((prevTodo) => (prevTodo.id === id ? todo :  prevTodo)))
 
@@ -21,7 +22,8 @@ function App() {
   }
 
   const deleteTodo = (id)=>{
-  setTodos((prev)=> prev.filter((prevTodo)=>(prevTodo.id !== id  ))
+  setTodos((prev)=> prev.filter((prevTodo)=>prevTodo.id !== id  )
+
   )
   }
 

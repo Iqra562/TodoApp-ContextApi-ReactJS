@@ -3,16 +3,16 @@ import { useTodo } from '../context/TodosContext';
 
 
 function TodoItem({todo}) {
- const  {updateTodo, deleteTodo,completeTodo} = useTodo();
+ const  {updateTodo, deleteTodo,toggleComplete} = useTodo();
  const [isTodoEditable,setTodoEditable] = useState(false);
  const [todoMsg,setTodoMsg ] = useState("");
   useEffect(()=>{
-    if(todo){
+    if(todo){ 
         setTodoMsg(todo.todo)
-
+    
     }
   },[todo]) 
-
+  
 
 // console.log(todoMsg)
  const edit = ()=>{
@@ -21,9 +21,8 @@ function TodoItem({todo}) {
  }
 
  const toggleTodo =  ()=>{
-    completeTodo(todo.id)
+    toggleComplete(todo.id)
  }
-
 
   return (
       <div
@@ -34,7 +33,8 @@ function TodoItem({todo}) {
           <input
               type="checkbox"
               className="cursor-pointer"
-            
+            checked ={todo.completed}
+            onChange={toggleTodo}
           />
           <input
               type="text"
@@ -42,20 +42,32 @@ function TodoItem({todo}) {
                   isTodoEditable ? "border-black/10 px-2" : "border-transparent"
               } ${todo.completed ? "line-through" : ""}`}
         value={todoMsg}
+        readOnly = {!isTodoEditable}
+        onChange={(e)=>setTodoMsg(e.target.value)}
           />
-          {/* Edit, Save Button */}
-          <button
+          {  !todo.completed &&
+            <button
               className="inline-flex w-8 h-8 rounded-lg text-sm border border-black/10 justify-center items-center bg-gray-50 hover:bg-gray-100 shrink-0 disabled:opacity-50"
-
+         onClick={()=>{
+            if(todo.completed)  return
+            if(isTodoEditable){
+               edit()
+            }else{
+                setTodoEditable((pre)=>!pre)
+            }
+         }}
           >
               {isTodoEditable ? "📁" : "✏️"}
           </button>
-          {/* Delete Todo Button */}
+        }
+        
           <button
               className="inline-flex w-8 h-8 rounded-lg text-sm border border-black/10 justify-center items-center bg-gray-50 hover:bg-gray-100 shrink-0"
-              onClick={()=>deleteTodo(todo.id)}
+              onClick={() => deleteTodo(todo.id)}
+
+
           >
-              ❌
+              ❌ 
           </button>
       </div>
   );
